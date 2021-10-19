@@ -15,7 +15,7 @@ public final class ConnectDb {
         Connection c = null;
         try {
             c = DriverManager
-                    .getConnection("jdbc:oracle:thin:@localhost:1521:orclcdb","mydb", "mydb");
+                    .getConnection("jdbc:oracle:thin:@localhost:1521:orclcdb","busmanagement", "oracle");
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+": "+e.getMessage());
