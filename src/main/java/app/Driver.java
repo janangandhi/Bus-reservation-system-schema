@@ -158,8 +158,8 @@ public class Driver {
     	  //Print all the values of each column
         for(int i=0;i<rs.getMetaData().getColumnCount();i++){
           System.out.println("|"+rs.getString(i)+"| ");
-        }
       }
+      System.out.println();
     } catch (Exception e){
       System.out.println("Error in executing query "+query);
       e.printStackTrace();
@@ -186,7 +186,7 @@ public class Driver {
       System.out.println("Passenger Id: " + resultSet.getInt("passenger_id") + " Bus Id: " + resultSet.getInt("bus_id")
               + " reservation id: " + resultSet.getInt("reservation_id") + " Name: " + resultSet.getString("name")
               + " Gender: " + resultSet.getString("gender") + " Age : " + resultSet.getInt("Age")
-              + " Email: " + resultSet.getInt("Email"));
+              + " Email: " + resultSet.getString("Email"));
     }
   }
   
