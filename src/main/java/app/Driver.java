@@ -75,7 +75,6 @@ public class Driver {
       resultSet = stmt.executeQuery("select * from Bus");
       printBusData(resultSet);
       System.out.println("****************************************************");
-
       System.out.println("****************************************************");
       System.out.println("Select * from passenger");
       resultSet = stmt.executeQuery("select * from passenger");
@@ -113,7 +112,8 @@ public class Driver {
     while (resultSet.next()) {
       System.out.println("Passenger Id: " + resultSet.getInt("passenger_id") + " Bus Id: " + resultSet.getInt("bus_id")
               + " reservation id: " + resultSet.getInt("reservation_id") + " Name: " + resultSet.getString("name")
-              + " Age : " + resultSet.getInt("Age") + " Email: " + resultSet.getInt("Email"));
+              + " Gender: " + resultSet.getString("gender") + " Age : " + resultSet.getInt("Age")
+              + " Email: " + resultSet.getInt("Email"));
     }
   }
 
