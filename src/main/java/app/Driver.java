@@ -3,10 +3,8 @@ package app;
 import connection.ConnectDb;
 import constants.Constants;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.Scanner;
 
 public class Driver {
 
@@ -81,8 +79,7 @@ public class Driver {
       System.exit(1);
     }
   }
-
-
+  
   public void printAllTables() {
     try {
       ResultSet resultSet;
@@ -116,6 +113,36 @@ public class Driver {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+
+  public void acceptQueries(){
+    Scanner sc = new Scanner(System.in);
+    while(true){
+       String input = sc.nextLine();
+       if(input.equalsIgnoreCase("EXIT")){
+         break;
+       }
+       executeAndPrintQuery(input);
+    }
+
+  }
+
+  private void executeAndPrintQuery(String query){
+    try{
+      Statement stmt = c.createStatement();
+      ResultSet rs = stmt.executeQuery(query);
+      while(rs.next()){
+        for(int i=0;i<rs.getMetaData().getColumnCount();i++){
+          System.out.println("|"+rs.getString(i)+"| ");
+        }
+      }
+    } catch (Exception e){
+      System.out.println("Error in executing query "+query);
+      e.printStackTrace();
+      System.exit(1);
+    }
+
   }
 
   private void printBusData(ResultSet resultSet) throws SQLException {
