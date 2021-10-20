@@ -1,5 +1,10 @@
 package constants;
 
+/**
+ * Pre defined constants for create and drop queries
+ * 
+ *	@author namrathakamath
+ */
 public class Constants {
   public static final String DROP_RESERVATION = "DROP TABLE reservation";
   public static final String DROP_PASSENGER = "DROP TABLE passenger";

@@ -11,9 +11,13 @@ public final class ConnectDb {
 
     public static ConnectDb getInstance(){ return instance;}
 
+    /**
+     * Establish Oracle connection
+     */
     public Connection getDbConnection() {
         Connection c = null;
         try {
+        	//Create  the connection object
             c = DriverManager
                     .getConnection("jdbc:oracle:thin:@localhost:1521:orclcdb","busmanagement", "oracle");
         } catch (Exception e) {
