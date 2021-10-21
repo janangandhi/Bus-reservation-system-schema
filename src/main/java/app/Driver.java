@@ -3,7 +3,10 @@ package app;
 import connection.ConnectDb;
 import constants.Constants;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Driver {
@@ -55,7 +58,7 @@ public class Driver {
       stmt.executeUpdate("INSERT INTO BUS (BUS_ID,NAME,SOURCE,DESTINATION) VALUES (1005,'Bus5','San Jose','Santa Cruz')");
       stmt.executeUpdate("INSERT INTO BUS (BUS_ID,NAME,SOURCE,DESTINATION) VALUES (1006,'Bus6','San Jose','Mountain View')");
       stmt.executeUpdate("INSERT INTO BUS (BUS_ID,NAME,SOURCE,DESTINATION) VALUES (1007,'Bus7','San Francisco','Berkeley')");
-      
+
       //Insert into BUS_STATUS table
       stmt.executeUpdate("INSERT INTO BUS_STATUS (BUS_ID,BUS_DATE,BOOKED_SEATS,AVAILABLE_SEATS,WAIT_LISTED_SEATS) VALUES (1001,TIMESTAMP'2021-10-16 00:00:00.0',100,0,10)");
       stmt.executeUpdate("INSERT INTO BUS_STATUS (BUS_ID,BUS_DATE,BOOKED_SEATS,AVAILABLE_SEATS,WAIT_LISTED_SEATS) VALUES (1002,TIMESTAMP'2021-10-16 00:00:00.0',27,13,0)");
@@ -64,7 +67,7 @@ public class Driver {
       stmt.executeUpdate("INSERT INTO BUS_STATUS (BUS_ID,BUS_DATE,BOOKED_SEATS,AVAILABLE_SEATS,WAIT_LISTED_SEATS) VALUES (1005,TIMESTAMP'2021-10-17 00:00:00.0',40,0,0)");
       stmt.executeUpdate("INSERT INTO BUS_STATUS (BUS_ID,BUS_DATE,BOOKED_SEATS,AVAILABLE_SEATS,WAIT_LISTED_SEATS) VALUES  (1006,TIMESTAMP'2021-10-15 00:00:00.0',19,21,0)");
       stmt.executeUpdate("INSERT INTO BUS_STATUS (BUS_ID,BUS_DATE,BOOKED_SEATS,AVAILABLE_SEATS,WAIT_LISTED_SEATS) VALUES (1007,TIMESTAMP'2021-10-18 00:00:00.0',39,1,0)");
-      
+
       //Insert into ROUTE table
       stmt.executeUpdate("INSERT INTO ROUTE (BUS_ID, ARRIVAL_TIME, ROUTE_MARKER) VALUES (1001, '23:45', '101' )");
       stmt.executeUpdate("INSERT INTO ROUTE (BUS_ID, ARRIVAL_TIME, ROUTE_MARKER) VALUES (1002, '00:25', '580' )");
@@ -73,14 +76,14 @@ public class Driver {
       stmt.executeUpdate("INSERT INTO ROUTE (BUS_ID, ARRIVAL_TIME, ROUTE_MARKER) VALUES (1005, '18:00', '880' )");
       stmt.executeUpdate("INSERT INTO ROUTE (BUS_ID, ARRIVAL_TIME, ROUTE_MARKER) VALUES (1006, '12:00', '420' )");
       stmt.executeUpdate("INSERT INTO ROUTE (BUS_ID, ARRIVAL_TIME, ROUTE_MARKER) VALUES (1007, '20:00', '505' )");
-      
+
       //Insert into ROUTE table
       stmt.executeUpdate("INSERT INTO RESERVATION VALUES(10001, 10, 'Booked', TO_DATE('10-01-2021','MM-DD-YYYY'), TO_DATE('2021-11-22','YYYY-MM-DD'))");
       stmt.executeUpdate("INSERT INTO RESERVATION VALUES(10002, 20, 'Booked', TO_DATE('10-02-2021','MM-DD-YYYY'), TO_DATE('2021-11-24','YYYY-MM-DD'))");
       stmt.executeUpdate("INSERT INTO RESERVATION VALUES(10003, 10, 'Waiting', TO_DATE('09-01-2021','MM-DD-YYYY'), TO_DATE('2021-11-22','YYYY-MM-DD'))");
       stmt.executeUpdate("INSERT INTO RESERVATION VALUES(10004, 15, 'Cancelled', TO_DATE('04-10-2021','MM-DD-YYYY'), TO_DATE('2021-11-25','YYYY-MM-DD'))");
       stmt.executeUpdate("INSERT INTO RESERVATION VALUES(10005, 40, 'Waiting', TO_DATE('07-10-2021','MM-DD-YYYY'), TO_DATE('2021-11-26','YYYY-MM-DD'))");
-      
+
       //Insert into PASSENGER table
       stmt.executeUpdate("INSERT INTO PASSENGER (PASSENGER_ID,RESERVATION_ID, BUS_ID, NAME, GENDER, AGE, EMAIL) VALUES (1010, 10001, 1001, 'JOHN','M',25,'john@gmail.com' )");
       stmt.executeUpdate("INSERT INTO PASSENGER (PASSENGER_ID,RESERVATION_ID, BUS_ID, NAME, GENDER, AGE, EMAIL) VALUES (1011,10002, 1002, 'PETER','F',25,'peter@gmail.com' )");
@@ -93,7 +96,7 @@ public class Driver {
       System.exit(1);
     }
   }
-  
+
   /**
    * Print all the tables
    */
@@ -135,33 +138,34 @@ public class Driver {
   /**
    * Get User input SQL queries from console
    */
-  public void acceptQueries(){
+  public void acceptQueries() {
     Scanner sc = new Scanner(System.in);
-    while(true){
-       String input = sc.nextLine();
-       if(input.equalsIgnoreCase("EXIT")){
-         break;
-       }
-       executeAndPrintQuery(input);
+    while (true) {
+      String input = sc.nextLine();
+      if (input.equalsIgnoreCase("EXIT")) {
+        break;
+      }
+      executeAndPrintQuery(input);
     }
 
   }
 
   /**
-   * Executing and printing the results of the query inputted by the user 
+   * Executing and printing the results of the query inputted by the user
    */
-  private void executeAndPrintQuery(String query){
-    try{
+  private void executeAndPrintQuery(String query) {
+    try {
       Statement stmt = c.createStatement();
       ResultSet rs = stmt.executeQuery(query);
-      while(rs.next()){
-    	  //Print all the values of each column
-        for(int i=0;i<rs.getMetaData().getColumnCount();i++){
-          System.out.println("|"+rs.getString(i)+"| ");
+      while (rs.next()) {
+        //Print all the values of each column
+        for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
+          System.out.println("|" + rs.getString(i) + "| ");
+        }
+        System.out.println();
       }
-      System.out.println();
-    } catch (Exception e){
-      System.out.println("Error in executing query "+query);
+    } catch (Exception e) {
+      System.out.println("Error in executing query " + query);
       e.printStackTrace();
       System.exit(1);
     }
@@ -177,7 +181,7 @@ public class Driver {
               + " Source: " + resultSet.getString("source") + "Destination: " + resultSet.getString("destination"));
     }
   }
-  
+
   /**
    * Print data from Passenger table
    */
@@ -189,7 +193,7 @@ public class Driver {
               + " Email: " + resultSet.getString("Email"));
     }
   }
-  
+
   /**
    * Print data from Route table
    */
